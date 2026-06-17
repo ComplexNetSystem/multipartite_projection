@@ -253,19 +253,9 @@ plt.savefig("tri_net_only_summ_p001_0823_filter_qcut.pdf")
 nx.write_gexf(G, "bipartite_YFS_1820_MI_corr_net_p001_0729.gexf")
 
 
-def add_node_attribute(table, var_groups, attr_label):
-    new_attr_val = [None] * len(table)
-    table.insert(len(table.columns), attr_label, new_attr_val, True)
-    for index, row in table.iterrows():
-        for ii in range(len(var_groups)):
-            if row['Id'] in var_groups[ii]:
-                table.at[index, attr_label] = ii
-    return table
-
-
 var_groups = [dep_vars, cvd_vars, vars_dna_meth, exposures]  # TBD
 node_table = pd.read_csv("nodes_tbl_tri.csv")
-add_node_attribute(node_table, var_groups, 'node_group')
+gm.add_node_attribute(node_table, var_groups, 'node_group')
 node_table.to_csv("nodes_tbl_tri_group.csv", index=False)
 
 """
